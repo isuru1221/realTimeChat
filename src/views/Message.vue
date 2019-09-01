@@ -2,6 +2,7 @@
     <div class="chat">
         <div class="container">
             <h3 class=" text-center">Messaging</h3>
+            <button @click="SignOut">SignO out</button>
             <div class="messaging">
                 <div class="inbox_msg">
                     <div class="inbox_people">
@@ -13,72 +14,13 @@
                                 <div class="stylish-input-group">
                                     <input type="text" class="search-bar"  placeholder="Search" >
                                     <span class="input-group-addon">
-                <button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button>
-                </span> </div>
+                                        <button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button>
+                                    </span>
+                                </div>
                             </div>
                         </div>
                         <div class="inbox_chat">
                             <div class="chat_list active_chat">
-                                <div class="chat_people">
-                                    <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-                                    <div class="chat_ib">
-                                        <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
-                                        <p>Test, which is a new approach to have all solutions
-                                            astrology under one roof.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="chat_list">
-                                <div class="chat_people">
-                                    <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-                                    <div class="chat_ib">
-                                        <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
-                                        <p>Test, which is a new approach to have all solutions
-                                            astrology under one roof.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="chat_list">
-                                <div class="chat_people">
-                                    <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-                                    <div class="chat_ib">
-                                        <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
-                                        <p>Test, which is a new approach to have all solutions
-                                            astrology under one roof.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="chat_list">
-                                <div class="chat_people">
-                                    <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-                                    <div class="chat_ib">
-                                        <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
-                                        <p>Test, which is a new approach to have all solutions
-                                            astrology under one roof.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="chat_list">
-                                <div class="chat_people">
-                                    <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-                                    <div class="chat_ib">
-                                        <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
-                                        <p>Test, which is a new approach to have all solutions
-                                            astrology under one roof.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="chat_list">
-                                <div class="chat_people">
-                                    <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-                                    <div class="chat_ib">
-                                        <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
-                                        <p>Test, which is a new approach to have all solutions
-                                            astrology under one roof.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="chat_list">
                                 <div class="chat_people">
                                     <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
                                     <div class="chat_ib">
@@ -163,7 +105,7 @@
                     message: this.message,
                     createdAt: new Date()
                 }).then(function() {
-                    console.log("Document successfully written!");
+                    this.autoScroll();
                 }).catch(function(error) {
                     console.error("Error writing document: ", error);
                 });
@@ -176,7 +118,17 @@
                         Messages.push(doc.data());
                     });
                     this.messages = Messages;
+                    setTimeout(()=>{
+                        this.autoScroll()
+                    },500);
                 });
+            },SignOut() {
+                firebase.auth().signOut().then(()=>{
+
+                }).catch((error)=> console.log(error));
+            },autoScroll(){
+                const scroll = document.querySelector('.msg_history');
+                scroll.scrollTop = scroll.scrollHeight;
             }
         }
     }
@@ -289,7 +241,8 @@
         float: right;
         width: 60%;
         overflow:hidden;
-        margin:26px 0 26px;
+        margin-right: 0;
+        /*margin:26px 0 26px;*!*/
     }
     .input_msg_write input {
         background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
