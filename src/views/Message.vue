@@ -1,23 +1,23 @@
 <template>
     <div class="chat">
         <div class="container">
-            <h3 class=" text-center">Messaging</h3>
+            <h3 class="text-center">Messaging</h3>
             <button @click="SignOut">SignO out</button>
             <div class="messaging">
                 <div class="inbox_msg">
                     <div class="inbox_people">
                         <div class="headind_srch">
-                            <div class="recent_heading">
+<!--                            <div class="recent_heading">-->
                                 <h4>Online Users</h4>
-                            </div>
-                            <div class="srch_bar">
-                                <div class="stylish-input-group">
-                                    <input type="text" class="search-bar"  placeholder="Search" >
-                                    <span class="input-group-addon">
-                                        <button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button>
-                                    </span>
-                                </div>
-                            </div>
+<!--                            </div>-->
+<!--                            <div class="srch_bar">-->
+<!--                                <div class="stylish-input-group">-->
+<!--                                    <input type="text" class="search-bar"  placeholder="Search" >-->
+<!--                                    <span class="input-group-addon">-->
+<!--                                        <button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button>-->
+<!--                                    </span>-->
+<!--                                </div>-->
+<!--                            </div>-->
                         </div>
                         <div class="inbox_chat">
                             <div v-for="user in users"class="chat_list active_chat">
@@ -136,7 +136,6 @@
                     });
             },SignOut() {
                 firebase.auth().signOut().then(()=>{
-
                 }).catch((error)=> console.log(error));
             },autoScroll(){
                 const scroll = document.querySelector('.msg_history');
@@ -172,7 +171,7 @@
     .top_spac{ margin: 20px 0 0;}
 
 
-    .recent_heading {float: left; width:40%;}
+    .recent_heading {align-items: center; width:40%;}
     .srch_bar {
         display: inline-block;
         text-align: right;
