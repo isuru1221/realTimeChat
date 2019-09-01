@@ -80,7 +80,8 @@
         created(){
           firebase.auth().onAuthStateChanged( user=>{
               if(user){
-                  this.authUser = user
+                  this.authUser = user;
+                  this.updateOnConnect(this.authUser);
               }else {
                   this.authUser = null
               }
@@ -129,6 +130,15 @@
             },autoScroll(){
                 const scroll = document.querySelector('.msg_history');
                 scroll.scrollTop = scroll.scrollHeight;
+            },updateOnConnect(users){
+                const Online = window.database.ref('.info/connected');
+                const userRef = window.database.ref('users/'+this.authUser.uid);
+                Online.on('value', snapshot => {
+                    if (snapshot.val()) {
+                        userRef.onDisconnect().remove();
+                        userRef.set(true);
+                    }
+                });
             }
         }
     }
