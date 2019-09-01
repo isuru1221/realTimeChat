@@ -126,7 +126,8 @@
 <script>
     // @ is an alias to /src
     // import HelloWorld from '@/components/Message.vue'
-    import TimeAgo from 'vue2-timeago'
+    import TimeAgo from 'vue2-timeago';
+    import firebase from 'firebase';
     export default {
         name:'chat',
         components: {
@@ -140,6 +141,17 @@
         },
         created(){
           this.getMessages();
+        },
+        beforeRouteEnter(to,from,next){
+            next( vm=>{
+                firebase.auth().onAuthStateChanged(user =>{
+                    if(user){
+                        next();
+                    }else{
+                        vm.$router.push('/login');
+                    }
+                })
+            })
         },
         methods:{
             sendMessage(){
