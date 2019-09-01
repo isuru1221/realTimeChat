@@ -97,7 +97,10 @@
                                 <div class="received_msg">
                                     <div class="received_withd_msg">
                                         <p>{{msg.message}}</p>
-                                        <span class="time_date"> 11:01 AM    |    June 9</span></div>
+                                        <span class="time_date">
+                                            <time-ago tooltip="center" :datetime="new Date(msg.createdAt.seconds*1000)"></time-ago>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="outgoing_msg">
@@ -123,9 +126,12 @@
 <script>
     // @ is an alias to /src
     // import HelloWorld from '@/components/Message.vue'
-
+    import TimeAgo from 'vue2-timeago'
     export default {
         name:'chat',
+        components: {
+            TimeAgo,
+        },
         data(){
             return{
                 message:null,
