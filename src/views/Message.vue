@@ -133,7 +133,7 @@
                         </div>
                         <div class="type_msg">
                             <div class="input_msg_write">
-                                <input type="text" class="write_msg" placeholder="Type a message" />
+                                <input @keyup.enter="sendMessage" v-model="message" type="text" class="write_msg" placeholder="Type a message" />
                                 <button class="msg_send_btn" type="button"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
                             </div>
                         </div>
@@ -149,7 +149,22 @@
     // import HelloWorld from '@/components/Message.vue'
 
     export default {
-        components: {
+        data(){
+            return{
+                message:null
+            }
+        },
+        methods:{
+            sendMessage(){
+                window.db.collection("chat").add({
+                    message: this.message,
+                }).then(function() {
+                    console.log("Document successfully written!");
+                }).catch(function(error) {
+                    console.error("Error writing document: ", error);
+                });
+                this.message = null;
+            }
         }
     }
 </script>

@@ -18,7 +18,6 @@ firebase.initializeApp({
 });
 const db = firebase.firestore();
 window.db = db;
-
 new Vue({
   router,
   store,
