@@ -92,22 +92,17 @@
                     </div>
                     <div class="mesgs">
                         <div class="msg_history">
-                            <div v-for="msg in messages" class="incoming_msg">
-                                <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-                                <div class="received_msg">
+                            <div v-for="msg in messages" class="">
+<!--                                <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>-->
+                                <div :class="[msg.author === authUser.displayName?'sent_msg':'received_msg']">
                                     <div class="received_withd_msg">
                                         <p>{{msg.message}}</p>
                                         <span class="time_date">
-                                            <time-ago tooltip="center" :datetime="new Date(msg.createdAt.seconds*1000)"></time-ago>
+                                            {{msg.author}}
+                                            <time-ago  tooltip="center" :datetime="new Date(msg.createdAt.seconds*1000)"></time-ago>
                                         </span>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="outgoing_msg">
-                                <div class="sent_msg">
-                                    <p>Test which is a new approach to have all
-                                        solutions</p>
-                                    <span class="time_date"> 11:01 AM    |    June 9</span> </div>
                             </div>
                         </div>
                         <div class="type_msg">
@@ -136,10 +131,18 @@
         data(){
             return{
                 message:null,
-                messages :null
+                messages :null,
+                authUser:{}
             }
         },
         created(){
+          firebase.auth().onAuthStateChanged( user=>{
+              if(user){
+                  this.authUser = user
+              }else {
+                  this.authUser = null
+              }
+          });
           this.getMessages();
         },
         beforeRouteEnter(to,from,next){
@@ -156,6 +159,7 @@
         methods:{
             sendMessage(){
                 window.db.collection("chat").add({
+                    author: this.authUser.displayName,
                     message: this.message,
                     createdAt: new Date()
                 }).then(function() {
@@ -263,8 +267,8 @@
     .time_date {
         color: #747474;
         display: block;
-        font-size: 12px;
-        margin: 8px 0 0;
+        font-size: 10px;
+        margin-left: -10px;
     }
     .received_withd_msg { width: 57%;}
     .mesgs {
@@ -281,10 +285,11 @@
         padding: 5px 10px 5px 12px;
         width:100%;
     }
-    .outgoing_msg{ overflow:hidden; margin:26px 0 26px;}
     .sent_msg {
         float: right;
-        width: 46%;
+        width: 60%;
+        overflow:hidden;
+        margin:26px 0 26px;
     }
     .input_msg_write input {
         background: rgba(0, 0, 0, 0) none repeat scroll 0 0;

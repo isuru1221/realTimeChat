@@ -14,7 +14,8 @@
         data(){
             return{
                 email:null,
-                password:null
+                password:null,
+
             }
         },
         methods: {
