@@ -8,7 +8,7 @@
                     <div class="inbox_people">
                         <div class="headind_srch">
                             <div class="recent_heading">
-                                <h4>Recent</h4>
+                                <h4>Online Users</h4>
                             </div>
                             <div class="srch_bar">
                                 <div class="stylish-input-group">
@@ -20,13 +20,12 @@
                             </div>
                         </div>
                         <div class="inbox_chat">
-                            <div class="chat_list active_chat">
-                                <div class="chat_people">
+                            <div v-for="user in users"class="chat_list active_chat">
+                                <div   class="chat_people">
                                     <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
                                     <div class="chat_ib">
-                                        <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
-                                        <p>Test, which is a new approach to have all solutions
-                                            astrology under one roof.</p>
+                                        <h5>{{user}}</h5>
+<!--                                        <span class="chat_date">Dec 25</span>-->
                                     </div>
                                 </div>
                             </div>
@@ -74,6 +73,7 @@
             return{
                 message:null,
                 messages :null,
+                users:null,
                 authUser:{}
             }
         },
@@ -87,6 +87,7 @@
               }
           });
           this.getMessages();
+          this.getUsers();
         },
         beforeRouteEnter(to,from,next){
             next( vm=>{
@@ -123,6 +124,16 @@
                         this.autoScroll()
                     },500);
                 });
+            },getUsers(){
+                const userRef = window.database.ref('users/');
+                userRef.on('value', snapshot => {
+                        let Users = [];
+                        snapshot.forEach( value => {
+                            Users.push(value.key);
+                            console.log("key" + value.key);
+                        });
+                        this.users = Users;
+                    });
             },SignOut() {
                 firebase.auth().signOut().then(()=>{
 
@@ -130,7 +141,7 @@
             },autoScroll(){
                 const scroll = document.querySelector('.msg_history');
                 scroll.scrollTop = scroll.scrollHeight;
-            },updateOnConnect(users){
+            },updateOnConnect(){
                 const Online = window.database.ref('.info/connected');
                 const userRef = window.database.ref('users/'+this.authUser.uid);
                 Online.on('value', snapshot => {
