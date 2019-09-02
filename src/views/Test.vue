@@ -30,7 +30,7 @@
         <div class="row">
             <div class="col-md-4 ">
                     <div v-for="user in users" class="chat_people  border   shadow p-3 mb-2 bg-white rounded">
-                            <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+                            <div class="chat_img" style=""> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
                             <div class="chat_ib">
                                 <h5>{{user}}</h5>
                                 <!--                                        <span class="chat_date">Dec 25</span>-->
@@ -43,39 +43,33 @@
                         <div v-for="msg in messages" class="">
                             <div v-if="msg.author !== authUser.displayName" class="received_msg">
                                 <div id="container" style="white-space:nowrap" class="p-3 mb-2">
-                                    <div id="image" style="display:inline;">
-                                        <img class="incoming_msg_img" src="https://ptetutorials.com/images/user-profile.png" alt="sunil">
-                                    </div>
-                                    <div id="texts" style="display:inline; white-space:nowrap; white-space: initial; word-wrap: break-word; display: block;" class="border  shadow p-3 mb-2 bg-white rounded">
-                                        {{msg.message}}
-<!--                                        <div class=" received_withd_msg">-->
-<!--                                            <span class="time_date">-->
-<!--                                        {{msg.author}}-->
-<!--                                        <time-ago  tooltip="center" :datetime="new Date(msg.createdAt.seconds*1000)"></time-ago>-->
-<!--                                    </span>-->
-<!--                                        </div>-->
-                                    </div>
+                                        <div id="image" style= "  display:inline;">
+                                            <img :class="[msg.message && msg.message.length < 100? 'img1':'img2']"  src="https://ptetutorials.com/images/user-profile.png" alt="sunil">
+                                        </div>
+                                        <div id="texts" v-if="msg.message && msg.message.length < 100" style="margin-left: 15px; white-space:nowrap; white-space: initial; word-wrap: break-word; display: table;" class="border  shadow p-3 mb-2 bg-white rounded">
+                                           <span class="time_date" v-if="msg.author">{{msg.author}} </span>
+                                            <div style="margin-left: 40px; ">
+                                                {{ msg.message }}
+                                                <time-ago  tooltip="center" style="padding-left: 10px; margin-right: auto;" :datetime="new Date(msg.createdAt.seconds*1000)"></time-ago>
+                                            </div>
+                                        </div>
+                                        <div id="texts" v-if="msg.message && msg.message.length > 100" style=" margin-left: 15px; white-space:nowrap; white-space: initial; word-wrap: break-word; display: block;" class="border  shadow p-3 mb-2 bg-white rounded">
+                                            <div style="margin-left: 40px;">{{ msg.message }}</div>
+                                        </div>
 
                                 </div>
                             </div>
                             <div v-if="msg.author === authUser.displayName" class="sent_msg">
-                                    <div id="texts" style="display:inline; white-space:nowrap; white-space: initial; word-wrap: break-word; display: block;" class="border  shadow p-3 mb-2 bg-white rounded">
+                                    <div id="texts" style="white-space:nowrap;  text-align: right;white-space: initial; word-wrap: break-word; display: block; margin-right: 10px; margin-top: 10px;" class="border  shadow p-3 mb-2  rounded">
                                         {{msg.message}}
-                                        <!--                                        <div class=" received_withd_msg">-->
-                                        <!--                                            <span class="time_date">-->
-                                        <!--                                        {{msg.author}}-->
-                                        <!--                                        <time-ago  tooltip="center" :datetime="new Date(msg.createdAt.seconds*1000)"></time-ago>-->
-                                        <!--                                    </span>-->
-                                        <!--                                        </div>-->
                                     </div>
-
                             </div>
                         </div>
                     </div>
                     <div class="type_msg">
                         <div class="input_msg_write">
                             <input @keyup.enter="sendMessage" v-model="message" type="text" class="write_msg" placeholder="Type a message" />
-                            <button class="msg_send_btn" type="button"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+                            <button class="msg_send_btn" type="button"><i class="fa-paper-plane" aria-hidden="true"></i></button>
                         </div>
                     </div>
                 </div>
@@ -247,7 +241,8 @@
 
     .incoming_msg_img {
         display: inline-block;
-        width: 6%;
+        width: 10%;
+        margin-bottom: -36px;
     }
     .received_msg {
         display: inline-block;
@@ -265,10 +260,11 @@
         width: 100%;
     }
     .time_date {
-        color: #747474;
+        margin-top: -15px;
+        color: #117a8b;
         display: block;
         font-size: 10px;
-        margin-left: -10px;
+        margin-left: 35px;
     }
     .received_withd_msg { width: 57%;}
     .mesgs {
@@ -320,5 +316,15 @@
         height: 546px;
         overflow-y: auto;
 
+    }
+    .img1 {
+             display: inline-block;
+             width: 10%;
+             margin-bottom: -76px;
+    }
+    .img2{
+                       display: inline-block;
+                       width: 10%;
+                       margin-bottom: -36px;
     }
 </style>

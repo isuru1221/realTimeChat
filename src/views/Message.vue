@@ -236,10 +236,11 @@
         width: 100%;
     }
     .time_date {
-        color: #747474;
+        margin-top: -30px;
+        color: #117a8b;
         display: block;
         font-size: 10px;
-        margin-left: -10px;
+        margin-left: 35px;
     }
     .received_withd_msg { width: 57%;}
     .mesgs {

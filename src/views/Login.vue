@@ -1,12 +1,17 @@
 <template>
-    <div>
-        <h3>Login Page</h3>
-        <input v-model="email" type="text" placeholder="Enter your email"><br>
-        <input v-model="password" type="password" placeholder="Enter your password"><br>
-        <button @click="login">Login</button>
-        <button @click="gmailLogin">Login with Google</button>
-        <router-link to="/signUp">Sign Up</router-link>
+    <div class="box shadow-lg p-3 mb-5 bg-white rounded">
+
+            <img src="../assets/chatter.png"  width="50%"  class="img1">
+            <div>
+                <input v-model="email" type="text" placeholder="Enter your email" class="login-box"><br>
+                <input v-model="password" type="password" placeholder="Enter your password" class="login-box"><br>
+                <button @click="login">Login</button>
+            </div>
+            <button @click="gmailLogin">Login with Google</button>
+            <router-link to="/signUp">Sign Up</router-link>
+
     </div>
+
 </template>
 
 <script>
@@ -41,3 +46,26 @@
         }
     }
 </script>
+
+
+<style>
+    .box{
+        width: 500px;
+        height: 600px;
+        top: 50%;
+        left: 50%;
+        position: absolute;
+        transform: translate(-50%,-50%);
+        border-radius: 20px;
+    }
+    .img1{
+        display:block; margin-left: auto; margin-right: auto; margin-top: 50px;
+    }
+    .login-box{
+        border:none;
+        border-bottom: 1px solid #3759ff;
+        background: transparent;
+        outline: none;
+        height: 40px;
+    }
+</style>
