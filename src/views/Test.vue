@@ -1,57 +1,83 @@
 <template>
-    <div class="chat">
-        <div class="container">
-<!--            <button @click="SignOut">SignO out</button>-->
-            <div class="messaging">
-                <div class="inbox_msg">
-                    <div class="inbox_people">
-                        <div class="headind_srch">
-<!--                            <div class="recent_heading">-->
-                                <h4>Online Users</h4>
-<!--                            </div>-->
-<!--                            <div class="srch_bar">-->
-<!--                                <div class="stylish-input-group">-->
-<!--                                    <input type="text" class="search-bar"  placeholder="Search" >-->
-<!--                                    <span class="input-group-addon">-->
-<!--                                        <button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button>-->
-<!--                                    </span>-->
-<!--                                </div>-->
-<!--                            </div>-->
-                        </div>
-                        <div class="inbox_chat">
-                            <div v-for="user in users"class="chat_list active_chat">
-                                <div   class="chat_people">
-                                    <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-                                    <div class="chat_ib">
-                                        <h5>{{user}}</h5>
-<!--                                        <span class="chat_date">Dec 25</span>-->
+<!--    <div class="chat">-->
+<!--        <div class="container">-->
+<!--            &lt;!&ndash;            <button @click="SignOut">SignO out</button>&ndash;&gt;-->
+<!--            <div class="messaging">-->
+<!--                <div class="inbox_msg">-->
+<!--                    <div class="inbox_people">-->
+<!--                        <div class="headind_srch">-->
+<!--                            &lt;!&ndash;                            <div class="recent_heading">&ndash;&gt;-->
+<!--                            <h4>Online Users</h4>-->
+<!--                            &lt;!&ndash;                            </div>&ndash;&gt;-->
+<!--                            &lt;!&ndash;                            <div class="srch_bar">&ndash;&gt;-->
+<!--                            &lt;!&ndash;                                <div class="stylish-input-group">&ndash;&gt;-->
+<!--                            &lt;!&ndash;                                    <input type="text" class="search-bar"  placeholder="Search" >&ndash;&gt;-->
+<!--                            &lt;!&ndash;                                    <span class="input-group-addon">&ndash;&gt;-->
+<!--                            &lt;!&ndash;                                        <button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button>&ndash;&gt;-->
+<!--                            &lt;!&ndash;                                    </span>&ndash;&gt;-->
+<!--                            &lt;!&ndash;                                </div>&ndash;&gt;-->
+<!--                            &lt;!&ndash;                            </div>&ndash;&gt;-->
+<!--                        </div>-->
+
+<!--                    </div>-->
+
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+
+    <div class="container  mt-sm-5 mx-auto ">
+        <div class="row">
+            <div class="col-md-4 ">
+                    <div v-for="user in users" class="chat_people  border   shadow p-3 mb-2 bg-white rounded">
+                            <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+                            <div class="chat_ib">
+                                <h5>{{user}}</h5>
+                                <!--                                        <span class="chat_date">Dec 25</span>-->
+                            </div>
+                    </div>
+            </div>
+            <div class="col-md-8 border  shadow p-3 mb-5 bg-white rounded">
+                <div class="chat">
+                    <div class="msg_history">
+                        <div v-for="msg in messages" class="">
+                            <div v-if="msg.author !== authUser.displayName" class="received_msg">
+                                <div id="container" style="white-space:nowrap" class="p-3 mb-2">
+                                    <div id="image" style="display:inline;">
+                                        <img class="incoming_msg_img" src="https://ptetutorials.com/images/user-profile.png" alt="sunil">
                                     </div>
+                                    <div id="texts" style="display:inline; white-space:nowrap; white-space: initial; word-wrap: break-word; display: block;" class="border  shadow p-3 mb-2 bg-white rounded">
+                                        {{msg.message}}
+<!--                                        <div class=" received_withd_msg">-->
+<!--                                            <span class="time_date">-->
+<!--                                        {{msg.author}}-->
+<!--                                        <time-ago  tooltip="center" :datetime="new Date(msg.createdAt.seconds*1000)"></time-ago>-->
+<!--                                    </span>-->
+<!--                                        </div>-->
+                                    </div>
+
                                 </div>
+                            </div>
+                            <div v-if="msg.author === authUser.displayName" class="sent_msg">
+                                    <div id="texts" style="display:inline; white-space:nowrap; white-space: initial; word-wrap: break-word; display: block;" class="border  shadow p-3 mb-2 bg-white rounded">
+                                        {{msg.message}}
+                                        <!--                                        <div class=" received_withd_msg">-->
+                                        <!--                                            <span class="time_date">-->
+                                        <!--                                        {{msg.author}}-->
+                                        <!--                                        <time-ago  tooltip="center" :datetime="new Date(msg.createdAt.seconds*1000)"></time-ago>-->
+                                        <!--                                    </span>-->
+                                        <!--                                        </div>-->
+                                    </div>
+
                             </div>
                         </div>
                     </div>
-<!--                    <div class="mesgs">-->
-<!--                        <div class="msg_history">-->
-<!--                            <div v-for="msg in messages" class="">-->
-<!--&lt;!&ndash;                                <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>&ndash;&gt;-->
-<!--                                <div :class="[msg.author === authUser.displayName?'sent_msg':'received_msg']">-->
-<!--                                    <div class="received_withd_msg">-->
-<!--                                        <p>{{msg.message}}</p>-->
-<!--                                        <span class="time_date">-->
-<!--                                            {{msg.author}}-->
-<!--                                            <time-ago  tooltip="center" :datetime="new Date(msg.createdAt.seconds*1000)"></time-ago>-->
-<!--                                        </span>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="type_msg">-->
-<!--                            <div class="input_msg_write">-->
-<!--                                <input @keyup.enter="sendMessage" v-model="message" type="text" class="write_msg" placeholder="Type a message" />-->
-<!--                                <button class="msg_send_btn" type="button"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
+                    <div class="type_msg">
+                        <div class="input_msg_write">
+                            <input @keyup.enter="sendMessage" v-model="message" type="text" class="write_msg" placeholder="Type a message" />
+                            <button class="msg_send_btn" type="button"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -77,16 +103,16 @@
             }
         },
         created(){
-          firebase.auth().onAuthStateChanged( user=>{
-              if(user){
-                  this.authUser = user;
-                  this.updateOnConnect(this.authUser);
-              }else {
-                  this.authUser = null
-              }
-          });
-          this.getMessages();
-          this.getUsers();
+            firebase.auth().onAuthStateChanged( user=>{
+                if(user){
+                    this.authUser = user;
+                    this.updateOnConnect(this.authUser);
+                }else {
+                    this.authUser = null
+                }
+            });
+            this.getMessages();
+            this.getUsers();
         },
         beforeRouteEnter(to,from,next){
             next( vm=>{
@@ -126,13 +152,13 @@
             },getUsers(){
                 const userRef = window.database.ref('users/');
                 userRef.on('value', snapshot => {
-                        let Users = [];
-                        snapshot.forEach( value => {
-                            Users.push(value.key);
-                            console.log("key" + value.key);
-                        });
-                        this.users = Users;
+                    let Users = [];
+                    snapshot.forEach( value => {
+                        Users.push(value.key);
+                        console.log("key" + value.key);
                     });
+                    this.users = Users;
+                });
             },SignOut() {
                 firebase.auth().signOut().then(()=>{
                 }).catch((error)=> console.log(error));
@@ -206,7 +232,10 @@
         width: 88%;
     }
 
-    .chat_people{ overflow:hidden; clear:both;}
+    .chat_people{
+        overflow:hidden;
+        clear:both;
+    }
     .chat_list {
         border-bottom: 1px solid #c4c4c4;
         margin: 0;
@@ -288,7 +317,8 @@
     }
     .messaging { padding: 0 0 50px 0;}
     .msg_history {
-        height: 516px;
+        height: 546px;
         overflow-y: auto;
+
     }
 </style>
